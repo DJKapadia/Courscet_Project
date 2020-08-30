@@ -1,0 +1,11 @@
+Here I am sharing 4 file in which 2 file(text,.ipynb) for automatically data and second is (text,.py) file for maually data.
+
+1.)In Automatically data file , we automatic fetch the data into our json file and convert it into dataframe. After we transform data into sql file from dataframe and then we perform our sql query to fetch appropriate result.
+
+2.)In manually data file, we manually enter the data in our table and store it in database. And then we perform our sql query to fetch appropriate result.
+
+sqlite3 must be installed in our system. and also library that are mention in our program that should also installed in our system
+
+Here I am sharing text file also.
+
+I have a video of this entire process if you told me then I can share with you.

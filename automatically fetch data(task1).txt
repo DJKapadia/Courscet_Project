@@ -1,0 +1,66 @@
+import json
+import sqlite3
+from tkinter import *
+from tkinter.ttk import Combobox
+import pandas as pd
+#open json file and store its content in data
+with open("exme.json") as f: # here exme is a json file where our data is stored
+    data=json.load(f)
+#we create dataframe for our json content
+df=pd.DataFrame(data)
+conn=sqlite3.connect('Dhruv.db') # Connect database here Dhruv.db is a database name
+c=conn.cursor()
+df.to_sql('employee',conn) # to_sql() function is used to write records stored in a DataFrame to a SQL database here  employee is a table name
+def print_me():
+    value=combo.get() #retrive value from combobox
+    #sql query when country selected in a combobx
+    if value=='Country':
+        conn = sqlite3.connect('Dhruv.db')
+        cursor = conn.cursor()
+        a = "select Country,count(Firstname) as Count_of_user,ROUND((count(*)*100)/(SELECT count(*) FROM employee)) as percentage from employee group by Country"
+        cur = conn.cursor()
+        cur.execute(a)
+        # while True:
+        b = cur.fetchall()
+        for v in b:
+            if (v == None):
+                break
+            print(v)
+        conn.close()
+    #sql query when department selected in a combobx
+    elif value=='Department':
+        conn = sqlite3.connect('Dhruv.db')
+        cursor = conn.cursor()
+        a = "select Department,count(Firstname) as Count_of_user,ROUND((count(*)*100)/(SELECT count(*) FROM employee)) as percentage from employee group by Department"
+        cur = conn.cursor()
+        cur.execute(a)
+        # while True:
+        b = cur.fetchall()
+        for v in b:
+            if (v == None):
+                break
+            print(v)
+        conn.close()
+    #sql query when salaryslab selected in a combobx
+    else:
+        conn = sqlite3.connect('Dhruv.db')
+        cursor = conn.cursor()
+        a = "select salarySlab,count(Firstname) as Count_of_user,ROUND((count(*)*100)/(SELECT count(*) FROM employee)) as percentage from employee group by salarySlab"
+        cur = conn.cursor()
+        cur.execute(a)
+        # while True:
+        b = cur.fetchall()
+        for v in b:
+            if (v == None):
+                break
+            print(v)
+        conn.close()
+
+root=Tk()
+v=["Department","Country","Salary_sab"]
+combo=Combobox(root,values=v,width=15) #create combobx(dropdown menu)
+combo.place(x=150,y=20)
+button=Button(root,text="Select",command=print_me)
+button.place(x=150,y=50)
+root.geometry("300x300+120+120") #set size of our output window
+root.mainloop()
